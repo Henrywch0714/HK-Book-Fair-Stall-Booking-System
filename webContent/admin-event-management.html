@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Event Management - Event Booth System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/admin-event-management.css" />
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🎪</span>
+                    <div class="logo-text-wrap">
+                        <span class="logo-title">Event Booth System</span>
+                        <span class="logo-subtitle">Admin Portal</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="../webContent/admin-dashboard.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="../webContent/admin-booth-management.html" class="nav-item">
+                    <span class="nav-icon">🎪</span>
+                    <span class="nav-label">Booth Management</span>
+                </a>
+                <a href="../webContent/admin-event-management.html" class="nav-item nav-item-active">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Event Management</span>
+                </a>
+                <a href="../webContent/admin-exhibitor-management.html" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-label">Exhibitor Management</span>
+                </a>
+                <a href="../webContent/admin-bookings.html" class="nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">Booking Management</span>
+                </a>
+                <a href="../webContent/settings.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <div class="main">
+            <!-- Top bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button">
+                        ☰
+                    </button>
+                    <span class="topbar-title">Event Management</span>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-badge">
+                        <div class="user-avatar">
+                            <span class="user-avatar-initials">AD</span>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Admin User</span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                    </div>
+                    <button class="logout-btn" id="logoutButton" type="button">Logout</button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <div class="events-container">
+                    <!-- Header Section -->
+                    <section class="events-header">
+                        <div class="header-content">
+                            <h1>📅 Event Management</h1>
+                            <p>Create, manage, and monitor all events in the system</p>
+                        </div>
+                        <button class="primary-btn add-event-btn" id="addEventBtn">
+                            ➕ Add New Event
+                        </button>
+                    </section>
+
+                    <!-- Stats Section -->
+                    <section class="stats-grid">
+                        <article class="stat-card">
+                            <div class="stat-icon">📅</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Total Events</div>
+                                <div class="stat-value" id="totalEvents">0</div>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon">🟢</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Active Events</div>
+                                <div class="stat-value" id="activeEvents">0</div>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon">🎪</div>
+                            <div class="stat-body">
+                            <div class="stat-label">Total Booths</div>
+                            <div class="stat-value" id="totalBoothsStat">0</div>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Total Revenue</div>
+                                <div class="stat-value" id="totalRevenue">$0</div>
+                            </div>
+                        </article>
+                    </section>
+
+                    <!-- Search and Filters -->
+                    <section class="filters-card">
+                        <div class="filters-header">
+                            <h2>🔍 Search & Filters</h2>
+                            <p>Find events by name, date, or status</p>
+                        </div>
+                        <div class="filters-grid">
+                            <div class="filter-field">
+                                <label for="searchEvents">Search Events</label>
+                                <input type="text" id="searchEvents" placeholder="Search by event name..." class="search-input">
+                            </div>
+                            <div class="filter-field">
+                                <label for="statusFilter">Status</label>
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="all">All Status</option>
+                                    <option value="upcoming">Upcoming</option>
+                                    <option value="active">Active</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="draft">Draft</option>
+                                </select>
+                            </div>
+                            <div class="filter-field">
+                                <label for="dateFilter">Date Range</label>
+                                <select id="dateFilter" class="filter-select">
+                                    <option value="all">All Dates</option>
+                                    <option value="today">Today</option>
+                                    <option value="week">This Week</option>
+                                    <option value="month">This Month</option>
+                                    <option value="custom">Custom Range</option>
+                                </select>
+                            </div>
+                            <div class="filter-actions">
+                                <button id="applyFiltersBtn" class="primary-btn filter-btn">Apply Filters</button>
+                                <button id="resetFiltersBtn" class="secondary-btn filter-btn">Reset</button>
+                                <button id="exportEventsBtn" class="ghost-btn filter-btn">📥 Export</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Events Table -->
+                    <section class="events-table-section">
+                        <div class="table-header">
+                            <h2>All Events</h2>
+                            <div class="table-actions">
+                                <span class="table-count" id="tableCount">0 events</span>
+                                <div class="view-toggle">
+                                    <button class="view-btn active" data-view="grid">🟰 Grid</button>
+                                    <button class="view-btn" data-view="list">☰ List</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid View -->
+                        <div class="events-grid" id="eventsGrid">
+                            <!-- Events will be dynamically loaded here -->
+                        </div>
+
+                        <!-- List View -->
+                        <div class="events-list" id="eventsList" style="display: none;">
+                            <table class="events-table">
+                                <thead>
+                                    <tr>
+                                        <th>Event</th>
+                                        <th>Date</th>
+                                        <th>Venue</th>
+                                        <th>Booths</th>
+                                        <th>Booked</th>
+                                        <th>Revenue</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="eventsTableBody">
+                                    <!-- Events will be dynamically loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div class="empty-state" id="emptyState">
+                            <div class="empty-icon">📅</div>
+                            <h3>No Events Found</h3>
+                            <p>Create your first event to get started</p>
+                            <button class="primary-btn" id="emptyAddEventBtn">➕ Add New Event</button>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div id="eventModal" class="modal" style="display: none;">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Event</h2>
+                <button class="modal-close" id="modalCloseBtn">×</button>
+            </div>
+            
+            <form id="eventForm" class="modal-body">
+                <div class="form-sections">
+                    <!-- Basic Information -->
+                    <section class="form-section">
+                        <h3>📝 Basic Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="eventTitle">Event Title *</label>
+                                <input type="text" id="eventTitle" name="eventTitle" required placeholder="e.g., Tech Expo 2025">
+                            </div>
+                            <div class="form-group">
+                                <label for="eventCategory">Category</label>
+                                <select id="eventCategory" name="eventCategory">
+                                    <option value="technology">Technology</option>
+                                    <option value="business">Business</option>
+                                    <option value="innovation">Innovation</option>
+                                    <option value="trade">Trade Show</option>
+                                    <option value="conference">Conference</option>
+                                    <option value="exhibition">Exhibition</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDate">Event Date *</label>
+                                <input type="date" id="eventDate" name="eventDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventTime">Event Time *</label>
+                                <input type="time" id="eventTime" name="eventTime" required>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label for="eventDescription">Description</label>
+                                <textarea id="eventDescription" name="eventDescription" rows="3" placeholder="Describe the event..."></textarea>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Venue Information -->
+                    <section class="form-section">
+                        <h3>🏟️ Venue Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="eventVenue">Venue Name *</label>
+                                <input type="text" id="eventVenue" name="eventVenue" required placeholder="e.g., Convention Center Hall A">
+                            </div>
+                            <div class="form-group">
+                                <label for="eventAddress">Address</label>
+                                <input type="text" id="eventAddress" name="eventAddress" placeholder="Full venue address">
+                            </div>
+                            <div class="form-group">
+                                <label for="eventCity">City</label>
+                                <input type="text" id="eventCity" name="eventCity" placeholder="City">
+                            </div>
+                            <div class="form-group">
+                                <label for="eventCapacity">Venue Capacity</label>
+                                <input type="number" id="eventCapacity" name="eventCapacity" placeholder="Maximum attendees">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Booth Configuration -->
+                    <section class="form-section">
+                        <h3>🎪 Booth Configuration</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="totalBooths">Total Booths *</label>
+                                <input type="number" id="totalBooths" name="totalBooths" required min="1" placeholder="Number of booths">
+                            </div>
+                            <div class="form-group">
+                                <label for="boothPrice">Base Booth Price ($) *</label>
+                                <input type="number" id="boothPrice" name="boothPrice" required min="0" step="50" placeholder="Starting price">
+                            </div>
+                            <div class="form-group">
+                                <label for="boothSizes">Booth Sizes</label>
+                                <select id="boothSizes" name="boothSizes" multiple class="multi-select">
+                                    <option value="small">Small (3x3m)</option>
+                                    <option value="medium">Medium (6x6m)</option>
+                                    <option value="large">Large (9x9m)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="priceTiers">Price Tiers</label>
+                                <select id="priceTiers" name="priceTiers" class="filter-select">
+                                    <option value="single">Single Tier</option>
+                                    <option value="economy_premium">Economy & Premium</option>
+                                    <option value="three_tier">Three Tiers</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Event Image -->
+                    <section class="form-section">
+                        <h3>🖼️ Event Image</h3>
+                        <div class="image-upload-section">
+                            <div class="image-preview" id="imagePreview">
+                                <div class="image-placeholder">
+                                    <span class="placeholder-icon">📷</span>
+                                    <span>No image selected</span>
+                                </div>
+                                <img id="previewImage" src="" alt="Event preview" style="display: none;">
+                            </div>
+                            <div class="image-actions">
+                                <button type="button" class="secondary-btn" id="uploadImageBtn">Upload Image</button>
+                                <button type="button" class="ghost-btn" id="removeImageBtn" style="display: none;">Remove</button>
+                                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Event Status -->
+                    <section class="form-section">
+                        <h3>📊 Event Status</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="eventStatus">Status *</label>
+                                <select id="eventStatus" name="eventStatus" required>
+                                    <option value="draft">Draft</option>
+                                    <option value="upcoming">Upcoming</option>
+                                    <option value="active">Active</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="registrationOpen">Registration Open</label>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="registrationOpen" name="registrationOpen" checked>
+                                    <label for="registrationOpen" class="checkbox-label">Allow booth bookings</label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="secondary-btn" id="cancelEventBtn">Cancel</button>
+                    <button type="submit" class="primary-btn" id="saveEventBtn">Save Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Transaction History Modal -->
+    <div id="transactionsModal" class="modal" style="display: none;">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2>Transaction History - <span id="transactionEventTitle">Event Name</span></h2>
+                <button class="modal-close" id="transactionsCloseBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="transactions-header">
+                    <div class="transaction-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Revenue</span>
+                            <span class="stat-value" id="transactionTotalRevenue">$0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Total Bookings</span>
+                            <span class="stat-value" id="transactionTotalBookings">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Average Price</span>
+                            <span class="stat-value" id="transactionAvgPrice">$0</span>
+                        </div>
+                    </div>
+                    <button class="ghost-btn" id="exportTransactionsBtn">📥 Export CSV</button>
+                </div>
+                <div class="transactions-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Exhibitor</th>
+                                <th>Booth</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTableBody">
+                            <!-- Transactions will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../src/api-service.js"></script>
+    <script src="../src/admin-event-management.js"></script>
+</body>
+</html>

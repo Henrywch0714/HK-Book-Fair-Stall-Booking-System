@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Settings - Event Booth System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 复用 event 管理的主样式 -->
+    <link rel="stylesheet" href="../style/admin-event-management.css" />
+    <!-- 当前页补充样式 -->
+    <link rel="stylesheet" href="../style/admin-settings.css" />
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🎪</span>
+                    <div class="logo-text-wrap">
+                        <span class="logo-title">Event Booth System</span>
+                        <span class="logo-subtitle">Admin Portal</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="../webContent/admin-dashboard.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="../webContent/admin-booth-management.html" class="nav-item">
+                    <span class="nav-icon">🎪</span>
+                    <span class="nav-label">Booth Management</span>
+                </a>
+                <a href="../webContent/admin-event-management.html" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Event Management</span>
+                </a>
+                <a href="../webContent/admin-exhibitor-management.html" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-label">Exhibitor Management</span>
+                </a>
+                <a href="../webContent/admin-bookings.html" class="nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">Booking Management</span>
+                </a>
+                <a href="../webContent/admin-settings.html" class="nav-item nav-item-active">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <div class="main">
+            <!-- Top bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button">
+                        ☰
+                    </button>
+                    <span class="topbar-title">Admin Settings</span>
+                </div>
+                <div class="topbar-right">
+                    <div class="user-badge">
+                        <div class="user-avatar">
+                            <span class="user-avatar-initials" id="userAvatarInitials">AD</span>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">Admin User</span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                    </div>
+                    <button class="logout-btn" id="logoutButton" type="button">Logout</button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <div class="settings-container">
+                    <!-- Header Section -->
+                    <section class="settings-header">
+                        <div class="header-content">
+                            <h1>⚙️ Admin Settings</h1>
+                            <p>Manage system-wide configurations and view high-level stats. Only admins can access this page.</p>
+                        </div>
+                    </section>
+
+                    <section class="stats-grid">
+                        <article class="stat-card">
+                            <div class="stat-icon">🎪</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Total Booths</div>
+                                <div class="stat-value" id="statTotalBooths">0</div>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Booked Booths</div>
+                                <div class="stat-value" id="statBookedBooths">0</div>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon">🟢</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Available Booths</div>
+                                <div class="stat-value" id="statAvailableBooths">0</div>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Active Exhibitors</div>
+                                <div class="stat-value" id="statActiveExhibitors">0</div>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon">📋</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Pending Bookings</div>
+                                <div class="stat-value" id="statPendingBookings">0</div>
+                            </div>
+                        </article>
+                        <article class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-body">
+                                <div class="stat-label">Total Revenue</div>
+                                <div class="stat-value" id="statTotalRevenue">$0</div>
+                            </div>
+                        </article>
+                    </section>
+
+                    <!-- Settings & Tools Grid -->
+                    <section class="settings-grid">
+                        <!-- System Settings Card -->
+                        <article class="settings-card">
+                            <div class="settings-card-header">
+                                <h2>System Configuration</h2>
+                            </div>
+                            <form id="settingsForm" class="settings-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="defaultBoothPrice">Default Booth Price ($)</label>
+                                        <input
+                                            type="number"
+                                            id="defaultBoothPrice"
+                                            class="form-control"
+                                            min="0"
+                                            step="50"
+                                            value="1000"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="maxBoothsPerEvent">Max Booths per Event</label>
+                                        <input
+                                            type="number"
+                                            id="maxBoothsPerEvent"
+                                            class="form-control"
+                                            min="1"
+                                            step="1"
+                                            value="100"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="registrationToggle">Exhibitor Registration</label>
+                                        <select id="registrationToggle" class="form-control">
+                                            <option value="open">Open</option>
+                                            <option value="closed">Closed</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bookingAutoConfirm">Booking Auto-confirm</label>
+                                        <select id="bookingAutoConfirm" class="form-control">
+                                            <option value="on">On</option>
+                                            <option value="off">Off</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" id="saveSettingsBtn" class="primary-btn">
+                                        💾 Save Settings
+                                    </button>
+                                </div>
+                            </form>
+                        </article>
+
+                        <!-- Admin Tools Card -->
+                        <article class="settings-card">
+                            <div class="settings-card-header">
+                                <h2>Admin Tools</h2>
+                                <p>Quick tools to inspect the current system status.</p>
+                            </div>
+                            <div class="settings-card-body tools-body">
+                                <button type="button" id="btnRefreshStats" class="secondary-btn tools-btn">
+                                    🔄 Refresh Stats
+                                </button>
+                                <button type="button" id="btnViewRawStats" class="ghost-btn tools-btn">
+                                    🧪 View Raw Stats (Console)
+                                </button>
+                                <p class="tools-note">
+                                    Raw stats are loaded from <code>/api/stats</code> and printed to the browser console.
+                                </p>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../src/api-service.js"></script>
+    <script src="../src/admin-settings.js"></script>
+</body>
+</html>

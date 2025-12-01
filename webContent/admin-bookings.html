@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Booking Management - Event Booth System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/admin-bookings.css" />
+</head>
+<body>
+    <div class="page">
+        <header class="topbar">
+            <div class="topbar-left">
+                <span class="logo-icon">🎪</span>
+                <div class="logo-text">
+                    <div class="logo-title">Event Booth System</div>
+                    <div class="logo-subtitle">Booking Management</div>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <a href="../webContent/admin-dashboard.html" class="topbar-link">
+                    ← Back to Dashboard
+                </a>
+                <button id="logoutButton" class="topbar-logout-btn">
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <main class="layout">
+            <section class="layout-header">
+                <div class="page-title-group">
+                    <h1 class="page-title">Booking Management 📋</h1>
+                    <p class="page-subtitle">
+                        Manage all booth bookings across events
+                    </p>
+                </div>
+            </section>
+
+            <!-- Stats -->
+            <section class="stats-grid">
+                <article class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-body">
+                        <div class="stat-label">Total Bookings</div>
+                        <div class="stat-value" id="totalBookings">0</div>
+                    </div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-body">
+                        <div class="stat-label">Confirmed</div>
+                        <div class="stat-value" id="confirmedBookings">0</div>
+                    </div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-body">
+                        <div class="stat-label">Pending</div>
+                        <div class="stat-value" id="pendingBookings">0</div>
+                    </div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-body">
+                        <div class="stat-label">Cancelled</div>
+                        <div class="stat-value" id="cancelledBookings">0</div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Filters -->
+            <section class="filters-card">
+                <header class="filters-header">
+                    <div class="filters-title-group">
+                        <h2 class="filters-title">Filters</h2>
+                        <p class="filters-subtitle">
+                            Filter bookings by status and event
+                        </p>
+                    </div>
+                </header>
+
+                <div class="filters-grid">
+                    <div class="filter-field">
+                        <label for="statusFilter">Status</label>
+                        <div class="select-wrapper">
+                            <select id="statusFilter">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="eventFilter">Event</label>
+                        <div class="select-wrapper">
+                            <select id="eventFilter">
+                                <option value="all">All Events</option>
+                                <option value="Tech Expo 2025">Tech Expo 2025</option>
+                                <option value="Business Summit">Business Summit</option>
+                                <option value="Innovation Fair">Innovation Fair</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button id="applyFiltersBtn" type="button" class="primary-btn filter-btn">
+                            Apply Filters
+                        </button>
+                        <button id="resetFiltersBtn" type="button" class="ghost-btn filter-btn">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bookings Table -->
+            <section class="table-card">
+                <header class="table-header">
+                    <div>
+                        <h2 class="table-title">All Bookings</h2>
+                        <p class="table-subtitle">
+                            <span class="table-icon">🔍</span>
+                            Manage and review booth bookings
+                        </p>
+                    </div>
+                    <div class="table-count" id="tableCountLabel">
+                        0 bookings
+                    </div>
+                </header>
+
+                <div class="table-wrapper">
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Exhibitor</th>
+                                <th>Booth</th>
+                                <th>Event</th>
+                                <th>Booking Date</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <!-- Rows rendered by JS -->
+                        </tbody>
+                    </table>
+
+                    <div id="emptyState" class="empty-state" hidden>
+                        <div class="empty-icon">🔎</div>
+                        <p class="empty-title">
+                            No bookings match your filter criteria.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../src/api-service.js"></script>
+    <script src="../src/admin-bookings.js"></script>
+</body>
+</html>

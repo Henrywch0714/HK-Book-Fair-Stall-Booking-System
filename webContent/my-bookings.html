@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Event Booth System</title>
+    <link rel="stylesheet" href="../style/my-bookings.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="menu-toggle" id="mobileMenuToggle">☰</button>
+            <div class="logo">
+                <span class="logo-icon">🎪</span>
+                <span>Event Booth System</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <button class="btn-back" onclick="window.location.href='exhibitor-dashboard.html'">
+                ← Dashboard
+            </button>
+            <div class="user-info">
+                <span class="user-name" id="userName">Loading...</span>
+                <span class="user-role">Exhibitor</span>
+            </div>
+            <button class="logout-btn" id="logoutButton">Logout</button>
+        </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="exhibitor-dashboard.html" class="nav-link">📊 Dashboard</a></li>
+                    <li><a href="booth-booking-svg.html" class="nav-link">🎟 Book Booth</a></li>
+                    <li><a href="my-bookings.html" class="nav-link active">📋 My Bookings</a></li>
+                    <li><a href="booth-layout.html" class="nav-link">🗺️ My Booth Map</a></li>
+                    <li><a href="settings.html" class="nav-link">⚙️ Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div>
+                    <button class="back-btn" onclick="window.location.href='exhibitor-dashboard.html'">
+                        ← Back
+                    </button>
+                    <h1 class="page-title">My Bookings</h1>
+                    <p class="page-subtitle">Manage all your booth bookings and reservations</p>
+                </div>
+                <div class="page-header-actions">
+                    <button class="btn-primary" onclick="window.location.href='booth-booking-svg.html'">
+                        ➕ New Booking
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="summary-card summary-card-total">
+                    <div class="summary-icon">📊</div>
+                    <div class="summary-content">
+                        <div class="summary-label">Total Bookings</div>
+                        <div class="summary-value" id="totalBookings">0</div>
+                    </div>
+                </div>
+                <div class="summary-card summary-card-confirmed">
+                    <div class="summary-icon">✅</div>
+                    <div class="summary-content">
+                        <div class="summary-label">Confirmed</div>
+                        <div class="summary-value" id="confirmedBookings">0</div>
+                    </div>
+                </div>
+                <div class="summary-card summary-card-pending">
+                    <div class="summary-icon">⏳</div>
+                    <div class="summary-content">
+                        <div class="summary-label">Pending Payment</div>
+                        <div class="summary-value" id="pendingBookings">0</div>
+                    </div>
+                </div>
+                <div class="summary-card summary-card-amount">
+                    <div class="summary-icon">💰</div>
+                    <div class="summary-content">
+                        <div class="summary-label">Total Amount</div>
+                        <div class="summary-value" id="totalAmount">$0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search by booth number, event name...">
+                </div>
+                <div class="filter-controls">
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <select id="eventFilter" class="filter-select">
+                        <option value="">All Events</option>
+                    </select>
+                    <button id="resetFilters" class="btn-secondary">Reset</button>
+                </div>
+            </section>
+
+            <!-- Bookings Container -->
+            <div class="bookings-container">
+                <!-- Loading State -->
+                <div id="loadingBookings" class="loading-container">
+                    <div class="loading-spinner-large"></div>
+                    <p>Loading your bookings...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyBookings" class="empty-state" style="display: none;">
+                    <div class="empty-icon">📭</div>
+                    <h3>No Bookings Found</h3>
+                    <p>You haven't made any booth bookings yet</p>
+                    <button class="btn-primary" onclick="window.location.href='booth-booking-svg.html'">
+                        Make Your First Booking
+                    </button>
+                </div>
+
+                <!-- Bookings List -->
+                <div id="bookingsList" class="bookings-list" style="display: none;">
+                    <!-- Bookings will be dynamically inserted here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Booking Details Modal -->
+    <div id="bookingModal" class="modal" style="display: none;" onclick="closeModal()">
+        <div class="modal-overlay"></div>
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Booking Details</h3>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be dynamically inserted -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn-primary" id="modalActionBtn" style="display: none;">Pay Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../src/api-service.js"></script>
+    <script src="../src/my-bookings.js"></script>
+</body>
+</html>

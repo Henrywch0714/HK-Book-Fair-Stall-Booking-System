@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Expo Genius</title>
+    <link rel="stylesheet" href="../style/payment.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="payment-header">
+            <div class="logo">
+                <h1>🎪 Expo Genius</h1>
+            </div>
+            <div class="header-info">
+                <span class="user-name" id="userName">Loading...</span>
+                <button class="btn-secondary" id="backBtn">← Back to Booking</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="payment-container">
+            <!-- Left Side - Payment Form -->
+            <div class="payment-form-section">
+                <h2>Payment Information</h2>
+                
+                <form id="paymentForm">
+                    <!-- Payment Method Selection -->
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <div class="payment-methods">
+                            <label class="payment-method">
+                                <input type="radio" name="paymentMethod" value="credit-card" checked>
+                                <span>💳 Credit/Debit Card</span>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="paymentMethod" value="paypal">
+                                <span>🅿️ PayPal</span>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="paymentMethod" value="bank-transfer">
+                                <span>🏦 Bank Transfer</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Credit Card Fields -->
+                    <div id="creditCardFields">
+                        <div class="form-group">
+                            <label for="cardName">Cardholder Name *</label>
+                            <input type="text" id="cardName" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number *</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiryDate">Expiry Date *</label>
+                                <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV *</label>
+                                <input type="text" id="cvv" placeholder="123" maxlength="4" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PayPal Fields -->
+                    <div id="paypalFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="paypalEmail">PayPal Email *</label>
+                            <input type="email" id="paypalEmail" placeholder="your@email.com">
+                        </div>
+                        <p class="info-text">You will be redirected to PayPal to complete your payment.</p>
+                    </div>
+
+                    <!-- Bank Transfer Fields -->
+                    <div id="bankTransferFields" style="display: none;">
+                        <div class="bank-info">
+                            <h3>Bank Transfer Details</h3>
+                            <p><strong>Bank Name:</strong> Expo Genius Bank</p>
+                            <p><strong>Account Number:</strong> 1234567890</p>
+                            <p><strong>Routing Number:</strong> 987654321</p>
+                            <p><strong>Reference:</strong> <span id="referenceNumber">Loading...</span></p>
+                        </div>
+                        <p class="info-text">Please include the reference number in your transfer.</p>
+                    </div>
+
+                    <!-- Billing Address -->
+                    <h3 class="section-title">Billing Address</h3>
+                    
+                    <div class="form-group">
+                        <label for="billingAddress">Street Address *</label>
+                        <input type="text" id="billingAddress" placeholder="123 Main St" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="billingCity">City *</label>
+                            <input type="text" id="billingCity" placeholder="New York" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="billingState">State/Province *</label>
+                            <input type="text" id="billingState" placeholder="NY" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="billingZip">ZIP/Postal Code *</label>
+                            <input type="text" id="billingZip" placeholder="10001" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="billingCountry">Country *</label>
+                            <select id="billingCountry" required>
+                                <option value="">Select Country</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="GB">United Kingdom</option>
+                                <option value="AU">Australia</option>
+                                <option value="DE">Germany</option>
+                                <option value="FR">France</option>
+                                <option value="JP">Japan</option>
+                                <option value="CN">China</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="termsCheckbox" required>
+                            I agree to the <a href="#" target="_blank">Terms and Conditions</a> and <a href="#" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary btn-large" id="submitPaymentBtn">
+                        Complete Payment
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Side - Order Summary -->
+            <div class="order-summary-section">
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    
+                    <!-- Event Information -->
+                    <div class="event-info" id="eventInfo">
+                        <h3 id="eventName">Loading...</h3>
+                        <p id="eventDate">Loading...</p>
+                        <p id="eventLocation">Loading...</p>
+                    </div>
+
+                    <!-- Company Information -->
+                    <div class="company-info" id="companyInfo">
+                        <h4>Company Details</h4>
+                        <p><strong>Company:</strong> <span id="companyName">Loading...</span></p>
+                        <p><strong>Contact:</strong> <span id="contactPerson">Loading...</span></p>
+                        <p><strong>Email:</strong> <span id="contactEmail">Loading...</span></p>
+                        <p><strong>Phone:</strong> <span id="contactPhone">Loading...</span></p>
+                    </div>
+
+                    <!-- Selected Booths -->
+                    <div class="booths-list" id="boothsList">
+                        <h4>Selected Booths</h4>
+                        <div id="boothsContainer">
+                            <!-- Booths will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Price Breakdown -->
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Service Fee (2%):</span>
+                            <span id="serviceFee">$0.00</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Tax (8%):</span>
+                            <span id="tax">$0.00</span>
+                        </div>
+                        <div class="price-row total">
+                            <span><strong>Total:</strong></span>
+                            <span id="totalAmount"><strong>$0.00</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Security Badge -->
+                    <div class="security-badge">
+                        <p>🔒 Secure Payment</p>
+                        <p class="small-text">Your payment information is encrypted and secure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processing Payment...</p>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="success-icon">✅</div>
+            <h2>Payment Successful!</h2>
+            <p>Your booth booking has been confirmed.</p>
+            <p>A confirmation email has been sent to <span id="confirmEmail"></span></p>
+            <button class="btn-primary" id="viewBookingsBtn">View My Bookings</button>
+        </div>
+    </div>
+
+    <script src="../src/api-service.js"></script>
+    <script src="../src/payment.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Booth Management - Event Booth System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/admin-booth-management.css" />
+    <style>
+      /* 仅与 SVG 相关的补充样式，不会破坏你原有布局 */
+      .svg-card {
+        margin-top: 16px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+        padding: 16px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .svg-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+      }
+      .svg-card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .svg-card-subtitle {
+        font-size: 13px;
+        color: #64748b;
+        margin-top: 2px;
+      }
+      .svg-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .svg-toolbar button {
+        font-size: 13px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid #cbd5f5;
+        background: #eff6ff;
+        color: #1d4ed8;
+        cursor: pointer;
+      }
+      .svg-toolbar button:hover {
+        background: #dbeafe;
+      }
+      .svg-container {
+        width: 100%;
+        max-height: 420px;
+        border-radius: 12px;
+        border: 1px dashed #d1d5db;
+        background: #f9fafb;
+        overflow: hidden;
+      }
+      #boothSvg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      @media (max-width: 768px) {
+        .svg-container {
+          max-height: 300px;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Top navigation -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <span class="logo-icon">🎪</span>
+                <div class="logo-text">
+                    <div class="logo-title">Event Booth System</div>
+                    <div class="logo-subtitle">Booth Management</div>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <a href="../webContent/admin-dashboard.html" class="topbar-link">
+                    ← Back to Dashboard
+                </a>
+                <button id="logoutButton" class="topbar-logout-btn">
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Main layout -->
+        <main class="layout">
+            <section class="layout-header">
+                <div class="page-title-group">
+                    <h1 class="page-title">Booth Management 🎪</h1>
+                    <p class="page-subtitle">
+                        Create, manage, and monitor all event booths
+                    </p>
+                </div>
+                <button
+                    id="openAddBoothBtn"
+                    type="button"
+                    class="primary-btn add-booth-btn"
+                >
+                    ➕ Add New Booth
+                </button>
+            </section>
+
+            <!-- Stats -->
+            <section class="stats-grid">
+                <article class="stat-card">
+                    <div class="stat-icon">🎪</div>
+                    <div class="stat-body">
+                        <div class="stat-label">Total Booths</div>
+                        <div class="stat-value" id="totalBooths">0</div>
+                    </div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-body">
+                        <div class="stat-label">Booked</div>
+                        <div class="stat-value" id="bookedBooths">0</div>
+                    </div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-icon">🟢</div>
+                    <div class="stat-body">
+                        <div class="stat-label">Available</div>
+                        <div class="stat-value" id="availableBooths">0</div>
+                    </div>
+                </article>
+                <article class="stat-card">
+                    <div class="stat-icon">🔧</div>
+                    <div class="stat-body">
+                        <div class="stat-label">Maintenance</div>
+                        <div class="stat-value" id="maintenanceBooths">0</div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- SVG 平面图：已镶嵌 -->
+            <section class="svg-card">
+              <header class="svg-card-header">
+                <div>
+                  <div class="svg-card-title">
+                    🗺️ Booth Map (SVG)
+                  </div>
+                  <div class="svg-card-subtitle">
+                    Drag booths on the map to update their coordinates. Click to select and edit in the modal.
+                  </div>
+                </div>
+                <div class="svg-toolbar">
+                  <button type="button" id="svgReloadBtn">Reload Map</button>
+                  <button type="button" id="svgAddCenterBtn">Add Booth At Center</button>
+                </div>
+              </header>
+              <div class="svg-container">
+                <svg id="boothSvg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                  <!-- 背景 -->
+                  <rect x="0" y="0" width="1000" height="500" fill="#f9fafb" stroke="#e5e7eb"/>
+                  <!-- 网格 -->
+                  <g id="boothSvgGrid" stroke="#e5e7eb" stroke-width="1"></g>
+                  <!-- booths 图层 -->
+                  <g id="boothSvgLayer"></g>
+                </svg>
+              </div>
+            </section>
+
+            <!-- Filters -->
+            <section class="filters-card">
+                <header class="filters-header">
+                    <div class="filters-title-group">
+                        <h2 class="filters-title">Filters</h2>
+                        <p class="filters-subtitle">
+                            Refine booths by event, hall, and status
+                        </p>
+                    </div>
+                </header>
+
+                <div class="filters-grid">
+                    <div class="filter-field">
+                        <label for="eventFilter">Event</label>
+                        <div class="select-wrapper">
+                            <select id="eventFilter">
+                                <option value="all">All Events</option>
+                                <option value="Tech Expo 2025">Tech Expo 2025</option>
+                                <option value="Business Summit">Business Summit</option>
+                                <option value="Innovation Fair">Innovation Fair</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="hallFilter">Hall</label>
+                        <div class="select-wrapper">
+                            <select id="hallFilter">
+                                <option value="all">All Halls</option>
+                                <option value="Hall A">Hall A</option>
+                                <option value="Hall B">Hall B</option>
+                                <option value="Hall C">Hall C</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="statusFilter">Status</label>
+                        <div class="select-wrapper">
+                            <select id="statusFilter">
+                                <option value="all">All Status</option>
+                                <option value="Available">Available</option>
+                                <option value="Booked">Booked</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button
+                            id="applyFiltersBtn"
+                            type="button"
+                            class="primary-btn filter-btn"
+                        >
+                            Apply Filters
+                        </button>
+                        <button
+                            id="resetFiltersBtn"
+                            type="button"
+                            class="ghost-btn filter-btn"
+                        >
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Table -->
+            <section class="table-card">
+                <header class="table-header">
+                    <div>
+                        <h2 class="table-title">All Booths</h2>
+                        <p class="table-subtitle">
+                            <span class="table-icon">🔍</span>
+                            Booths overview
+                        </p>
+                    </div>
+                    <div class="table-count" id="tableCountLabel">
+                        0 booths
+                    </div>
+                </header>
+
+                <div class="table-wrapper">
+                    <table class="booths-table">
+                        <thead>
+                            <tr>
+                                <th>Booth ID</th>
+                                <th>Event</th>
+                                <th>Hall</th>
+                                <th>Size</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Exhibitor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="boothTableBody">
+                            <!-- Rows rendered by JS -->
+                        </tbody>
+                    </table>
+
+                    <div
+                        id="emptyState"
+                        class="empty-state"
+                        hidden
+                    >
+                        <div class="empty-icon">🔎</div>
+                        <p class="empty-title">
+                            No booths match your filter criteria.
+                        </p>
+                        <p class="empty-text">
+                            Try adjusting your filters or
+                            <button
+                                type="button"
+                                class="inline-btn"
+                                id="emptyStateAddBooth"
+                            >
+                                add a new booth
+                            </button>
+                            .
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div
+        id="boothModalBackdrop"
+        class="modal-backdrop"
+        tabindex="-1"
+        style="display: none;"
+    >
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="boothModalTitle">
+            <header class="modal-header">
+                <h2 id="boothModalTitle">Add New Booth</h2>
+                <button
+                    id="modalCloseBtn"
+                    type="button"
+                    class="icon-btn"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+            </header>
+
+            <form id="boothForm" class="modal-body">
+                <!-- Basic information -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">Basic Information</h3>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="boothId">Booth ID</label>
+                            <input
+                                type="text"
+                                id="boothId"
+                                placeholder="e.g., A-101"
+                            />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="boothEvent">Event</label>
+                            <div class="select-wrapper">
+                                <select id="boothEvent">
+                                    <option value="">Select Event</option>
+                                    <option value="Tech Expo 2025">Tech Expo 2025</option>
+                                    <option value="Business Summit">Business Summit</option>
+                                    <option value="Innovation Fair">Innovation Fair</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="boothHall">Hall</label>
+                            <div class="select-wrapper">
+                                <select id="boothHall">
+                                    <option value="">Select Hall</option>
+                                    <option value="Hall A">Hall A</option>
+                                    <option value="Hall B">Hall B</option>
+                                    <option value="Hall C">Hall C</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="boothSize">Size</label>
+                            <div class="select-wrapper">
+                                <select id="boothSize">
+                                    <option value="">Select Size</option>
+                                    <option value="3x3m (Small)">3x3m (Small)</option>
+                                    <option value="6x6m (Medium)">6x6m (Medium)</option>
+                                    <option value="9x9m (Large)">9x9m (Large)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="boothPrice">Price ($)</label>
+                            <input
+                                type="number"
+                                id="boothPrice"
+                                min="0"
+                                step="1"
+                                placeholder="e.g., 2000"
+                            />
+                        </div>
+
+                        <div class="form-field">
+                            <label for="boothStatus">Status</label>
+                            <div class="select-wrapper">
+                                <select id="boothStatus">
+                                    <option value="Available">Available</option>
+                                    <option value="Booked">Booked</option>
+                                    <option value="Maintenance">Maintenance</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">Features &amp; Amenities</h3>
+                    <div class="features-grid">
+                        <label class="chip">
+                            <input type="checkbox" name="features" value="WiFi" />
+                            <span>WiFi</span>
+                        </label>
+                        <label class="chip">
+                            <input type="checkbox" name="features" value="Power Supply" />
+                            <span>Power Supply</span>
+                        </label>
+                        <label class="chip">
+                            <input type="checkbox" name="features" value="Storage" />
+                            <span>Storage</span>
+                        </label>
+                        <label class="chip">
+                            <input type="checkbox" name="features" value="LED Display" />
+                            <span>LED Display</span>
+                        </label>
+                        <label class="chip">
+                            <input type="checkbox" name="features" value="Sound System" />
+                            <span>Sound System</span>
+                        </label>
+                        <label class="chip">
+                            <input type="checkbox" name="features" value="Meeting Area" />
+                            <span>Meeting Area</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Description -->
+                <section class="modal-section">
+                    <h3 class="modal-section-title">Additional Details</h3>
+                    <div class="form-field">
+                        <label for="boothDescription">Description</label>
+                        <textarea
+                            id="boothDescription"
+                            rows="3"
+                            placeholder="Describe booth location, visibility, or notes."
+                        ></textarea>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer class="modal-footer">
+                    <button
+                        id="cancelBoothBtn"
+                        type="button"
+                        class="ghost-btn"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        id="saveBoothBtn"
+                        type="button"
+                        class="primary-btn"
+                    >
+                        Save Booth
+                    </button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <script src="../src/api-service.js"></script>
+    <script src="../src/admin-booth-management.js"></script>
+</body>
+</html>

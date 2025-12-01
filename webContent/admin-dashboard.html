@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard - Event Booth System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/admin-dashboard.css" />
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🎪</span>
+                    <div class="logo-text-wrap">
+                        <span class="logo-title">Event Booth System</span>
+                        <span class="logo-subtitle">Admin Portal</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="../webContent/admin-dashboard.html" class="nav-item nav-item-active">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="../webContent/admin-booth-management.html" class="nav-item">
+                    <span class="nav-icon">🎪</span>
+                    <span class="nav-label">Booth Management</span>
+                </a>
+                <a href="../webContent/admin-exhibitor-management.html" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-label">Exhibitor Management</span>
+                </a>
+                <a href="../webContent/admin-event-management.html" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    <span class="nav-label">Event Management</span>
+                </a>
+                <a href="../webContent/admin-settings.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </a>
+                <a href="../webContent/admin-bookings.html" class="nav-item">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-label">Booking Management</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <div class="main">
+            <!-- Top bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button">
+                        ☰
+                    </button>
+                    <span class="topbar-title">Admin Dashboard</span>
+                </div>
+
+                <div class="topbar-right">
+                    <button class="icon-button" id="notificationButton" type="button">
+                        <span class="icon">🔔</span>
+                        <span class="badge" id="notificationCount">5</span>
+                    </button>
+
+                    <div class="user-badge">
+                        <div class="user-avatar">
+                            <span class="user-avatar-initials">AD</span>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Admin User</span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                    </div>
+
+                    <button class="logout-btn" id="logoutButton" type="button">
+                        Logout
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Welcome -->
+                <section class="welcome-card">
+                    <h1>Admin Dashboard 👨‍💼</h1>
+                    <p>Welcome back! Here's what's happening with your events today.</p>
+                </section>
+
+                <!-- KPI cards -->
+                <section class="kpi-grid">
+                    <article class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">Total Booths</span>
+                            <span class="kpi-icon">🎪</span>
+                        </div>
+                        <div class="kpi-main">
+                            <span class="kpi-value" id="kpiTotalBooths">156</span>
+                            <span class="kpi-sub">Across all events</span>
+                        </div>
+                    </article>
+
+                    <article class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">Booked Booths</span>
+                            <span class="kpi-icon">✅</span>
+                        </div>
+                        <div class="kpi-main">
+                            <span class="kpi-value" id="kpiBookedBooths">98</span>
+                            <span class="kpi-sub">
+                                ↑ 62.8% occupancy rate
+                            </span>
+                        </div>
+                    </article>
+
+                    <article class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">Pending Approvals</span>
+                            <span class="kpi-icon">⏳</span>
+                        </div>
+                        <div class="kpi-main">
+                            <span class="kpi-value" id="kpiPendingApprovals">12</span>
+                            <span class="kpi-sub">
+                                Awaiting review
+                            </span>
+                        </div>
+                    </article>
+
+                    <article class="kpi-card">
+                        <div class="kpi-header">
+                            <span class="kpi-label">Total Revenue</span>
+                            <span class="kpi-icon">💰</span>
+                        </div>
+                        <div class="kpi-main">
+                            <span class="kpi-value" id="kpiTotalRevenue">$387K</span>
+                            <span class="kpi-sub">
+                                ↑ 15.3% from last month
+                            </span>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- Quick actions & Recent activity + Revenue -->
+                <section class="grid-top">
+                    <!-- Quick Actions -->
+                    <section class="quick-actions">
+                        <div class="section-header">
+                            <h2>Quick Actions</h2>
+                        </div>
+                        <div class="quick-actions-grid">
+                            <button
+                                class="qa-card"
+                                type="button"
+                                data-action="addBooth"
+                            >
+                                <div class="qa-icon">🎯</div>
+                                <div class="qa-text">
+                                    <div class="qa-title">Add New Booth</div>
+                                    <div class="qa-sub">
+                                        Create and configure new booths
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button
+                                class="qa-card"
+                                type="button"
+                                data-action="approveBookings"
+                            >
+                                <div class="qa-icon">✅</div>
+                                <div class="qa-text">
+                                    <div class="qa-title">Approve Bookings</div>
+                                    <div class="qa-sub">
+                                        Review pending booth requests
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button
+                                class="qa-card"
+                                type="button"
+                                data-action="scheduleEvent"
+                            >
+                                <div class="qa-icon">📅</div>
+                                <div class="qa-text">
+                                    <div class="qa-title">Schedule Event</div>
+                                    <div class="qa-sub">
+                                        Plan new events and dates
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button
+                                class="qa-card"
+                                type="button"
+                                data-action="manageExhibitors"
+                            >
+                                <div class="qa-icon">👥</div>
+                                <div class="qa-text">
+                                    <div class="qa-title">Manage Exhibitors</div>
+                                    <div class="qa-sub">
+                                        View and manage exhibitor accounts
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Recent Activity -->
+                    <section class="activity-panel">
+                        <div class="section-header">
+                            <h2>Recent Activity</h2>
+                        </div>
+                        <ul class="activity-list">
+                            <li class="activity-item">
+                                <div class="activity-icon">📝</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">New Booking Request</div>
+                                    <div class="activity-desc">
+                                        Tech Solutions Inc. booked booth A-101
+                                    </div>
+                                </div>
+                                <div class="activity-meta">2 minutes ago</div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon">💳</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Payment Received</div>
+                                    <div class="activity-desc">
+                                        $2,500 from Global Business Corp.
+                                    </div>
+                                </div>
+                                <div class="activity-meta">15 minutes ago</div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon">📝</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Booking Approved</div>
+                                    <div class="activity-desc">
+                                        Booth B-205 approved for Innovation Labs
+                                    </div>
+                                </div>
+                                <div class="activity-meta">1 hour ago</div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon">❌</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Booking Cancelled</div>
+                                    <div class="activity-desc">
+                                        Trade Solutions Ltd. cancelled booth A-150
+                                    </div>
+                                </div>
+                                <div class="activity-meta">2 hours ago</div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon">📝</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">New Exhibitor Registration</div>
+                                    <div class="activity-desc">
+                                        Enterprise Solutions joined the platform
+                                    </div>
+                                </div>
+                                <div class="activity-meta">3 hours ago</div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- Revenue Analytics -->
+                    <section class="revenue-panel">
+                        <div class="section-header">
+                            <h2>Revenue Analytics</h2>
+                        </div>
+                        <p class="revenue-caption">
+                            📊 Revenue Chart (Last 6 Months)
+                        </p>
+                        <div class="chart-wrapper">
+                            <canvas id="revenueChart" width="400" height="200"></canvas>
+                        </div>
+                    </section>
+                </section>
+
+                <!-- Recent bookings table -->
+                <section class="bookings-section">
+                    <div class="section-header">
+                        <h2>Recent Bookings</h2>
+                        <a href="../webContent/admin-bookings.html" class="view-all-link">
+                            View All
+                        </a>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="bookings-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Exhibitor</th>
+                                    <th>Booth</th>
+                                    <th>Event</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th class="th-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BK001</td>
+                                    <td>Tech Solutions Inc.</td>
+                                    <td>A-101</td>
+                                    <td>Tech Expo 2025</td>
+                                    <td>Nov 01, 2025</td>
+                                    <td>
+                                        <span class="status-pill status-confirmed">
+                                            Confirmed
+                                        </span>
+                                    </td>
+                                    <td class="td-right">$2,500</td>
+                                </tr>
+                                <tr>
+                                    <td>BK002</td>
+                                    <td>Global Business Corp.</td>
+                                    <td>B-205</td>
+                                    <td>Business Summit</td>
+                                    <td>Nov 05, 2025</td>
+                                    <td>
+                                        <span class="status-pill status-pending">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="td-right">$3,200</td>
+                                </tr>
+                                <tr>
+                                    <td>BK003</td>
+                                    <td>Innovation Labs</td>
+                                    <td>C-310</td>
+                                    <td>Innovation Fair</td>
+                                    <td>Oct 20, 2025</td>
+                                    <td>
+                                        <span class="status-pill status-confirmed">
+                                            Confirmed
+                                        </span>
+                                    </td>
+                                    <td class="td-right">$2,800</td>
+                                </tr>
+                                <tr>
+                                    <td>BK004</td>
+                                    <td>Digital Innovations</td>
+                                    <td>B-150</td>
+                                    <td>Tech Expo 2025</td>
+                                    <td>Nov 03, 2025</td>
+                                    <td>
+                                        <span class="status-pill status-confirmed">
+                                            Confirmed
+                                        </span>
+                                    </td>
+                                    <td class="td-right">$4,500</td>
+                                </tr>
+                                <tr>
+                                    <td>BK005</td>
+                                    <td>Enterprise Solutions</td>
+                                    <td>C-120</td>
+                                    <td>Business Summit</td>
+                                    <td>Nov 08, 2025</td>
+                                    <td>
+                                        <span class="status-pill status-pending">
+                                            Pending
+                                        </span>
+                                    </td>
+                                    <td class="td-right">$2,700</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script src="../src/api-service.js"></script>
+    <script src="../src/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Event Booth System</title>
+    <link rel="stylesheet" href="../style/settings.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="topbar">
+    <div class="topbar-left">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        <h1 class="topbar-title">Settings</h1>
+    </div>
+    <div class="topbar-right">
+
+        <button class="btn-back" onclick="window.location.href='exhibitor-dashboard.html'">
+            ← Dashboard
+        </button>
+        <div class="user-badge">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+                <div class="user-name" id="userName">Loading...</div>
+                <div class="user-role">Exhibitor</div>
+            </div>
+        </div>
+        <button class="logout-btn" id="logoutButton">Logout</button>
+    </div>
+</div>
+
+    <div class="layout">
+        <!-- Sidebar Navigation - UNIFIED -->
+        <nav class="sidebar">
+            <ul class="nav-menu">
+                <li><a href="exhibitor-dashboard.html" class="nav-link">📊 Dashboard</a></li>
+                <li><a href="booth-booking-svg.html" class="nav-link">🎟 Book Booth</a></li>
+                <li><a href="my-bookings.html" class="nav-link">📋 My Bookings</a></li>
+                <li><a href="booth-layout.html" class="nav-link">🗺️ My Booth Map</a></li>
+                <li><a href="settings.html" class="nav-link active">⚙️ Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Manage your account and preferences</p>
+            </div>
+
+            <!-- Settings Sections -->
+            <div class="settings-container">
+                <!-- Profile Settings -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <h2 class="section-title">👤 Profile Information</h2>
+                        <p class="section-description">Update your personal and company details</p>
+                    </div>
+                    <div class="settings-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" placeholder="Enter first name">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" placeholder="Enter last name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="your.email@company.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" placeholder="+1 234 567 8900">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyName">Company Name</label>
+                            <input type="text" id="companyName" placeholder="Your Company Name">
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-primary" onclick="saveProfile()">💾 Save Changes</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notification Settings -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <h2 class="section-title">🔔 Notifications</h2>
+                        <p class="section-description">Choose what updates you want to receive</p>
+                    </div>
+                    <div class="settings-form">
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <strong>Email Notifications</strong>
+                                <p>Receive updates about your bookings via email</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="emailNotif" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <strong>Booking Reminders</strong>
+                                <p>Get reminded about upcoming events</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="bookingReminders" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <strong>Payment Alerts</strong>
+                                <p>Notifications about payment status changes</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="paymentAlerts" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-primary" onclick="saveNotifications()">💾 Save Preferences</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Security Settings -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <h2 class="section-title">🔒 Security</h2>
+                        <p class="section-description">Manage your password and security settings</p>
+                    </div>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" placeholder="••••••••">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" placeholder="••••••••">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" placeholder="••••••••">
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-primary" onclick="changePassword()">🔑 Change Password</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../src/api-service.js"></script>
+    <script src="../src/settings.js"></script>
+</body>
+</html>

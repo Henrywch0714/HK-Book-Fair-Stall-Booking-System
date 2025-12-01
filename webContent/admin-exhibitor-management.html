@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Exhibitor Management - Event Booth System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/admin-exhibitor-management.css" />
+</head>
+<body>
+    <div class="page">
+        <!-- Top bar -->
+        <header class="top-bar">
+            <div class="top-left">
+                <div class="logo">
+                    <span class="logo-icon">🎪</span>
+                    <div class="logo-texts">
+                        <span class="logo-title">Event Booth System</span>
+                        <span class="logo-subtitle">Exhibitor Management</span>
+                    </div>
+                </div>
+            </div>
+            <div class="top-right">
+                <a href="../webContent/admin-dashboard.html" class="top-link back-link">
+                    ← Back to Dashboard
+                </a>
+                <button class="top-link logout-btn" id="logoutButton" type="button">
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Main -->
+        <main class="main">
+            <!-- Header / Actions -->
+            <section class="header-section">
+                <div class="header-text">
+                    <h1>Exhibitor Management 👥</h1>
+                    <p>View and manage all registered exhibitors</p>
+                </div>
+                <button class="export-btn" id="exportBtn" type="button">
+                    📥 Export Data
+                </button>
+            </section>
+
+            <!-- Stats -->
+            <section class="stats">
+                <article class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Exhibitors</div>
+                        <div class="stat-value" id="totalExhibitors">48</div>
+                    </div>
+                </article>
+
+                <article class="stat-card stat-active">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Active</div>
+                        <div class="stat-value" id="activeExhibitors">42</div>
+                    </div>
+                </article>
+
+                <article class="stat-card stat-new">
+                    <div class="stat-icon">🆕</div>
+                    <div class="stat-info">
+                        <div class="stat-label">New This Month</div>
+                        <div class="stat-value" id="newThisMonth">6</div>
+                    </div>
+                </article>
+
+                <article class="stat-card stat-revenue">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Revenue</div>
+                        <div class="stat-value" id="totalRevenue">$387K</div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Main 3-column layout -->
+            <section class="grid">
+                <!-- Filters -->
+                <aside class="filters-panel">
+                    <h2 class="panel-title">Filters</h2>
+
+                    <div class="filter-group">
+                        <label for="industryFilter">Industry</label>
+                        <select id="industryFilter" class="input-select">
+                            <option value="all">All Industries</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Retail">Retail</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="statusFilter">Status</label>
+                        <select id="statusFilter" class="input-select">
+                            <option value="all">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sortFilter">Sort By</label>
+                        <select id="sortFilter" class="input-select">
+                            <option value="nameAsc">Name (A-Z)</option>
+                            <option value="nameDesc">Name (Z-A)</option>
+                            <option value="mostBookings">Most Bookings</option>
+                            <option value="highestRevenue">Highest Revenue</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button id="applyFiltersBtn" type="button" class="primary-btn">
+                            Apply Filters
+                        </button>
+                        <button id="resetFiltersBtn" type="button" class="secondary-btn">
+                            Reset
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Exhibitor list -->
+                <section class="list-panel">
+                    <div class="list-header">
+                        <h2 class="panel-title">Exhibitors</h2>
+                        <span class="list-count" id="listCountLabel"></span>
+                    </div>
+
+                    <div class="list" id="exhibitorList">
+
+                    </div>
+
+                    <div class="empty-state" id="emptyState" hidden>
+                        No exhibitors match your filter criteria.
+                    </div>
+                </section>
+
+                <!-- Details panel -->
+                <aside class="details-panel" id="detailsPanel">
+                    <header class="details-header">
+                        <h2>Exhibitor Details</h2>
+                        <button class="details-close" id="detailsCloseBtn" type="button">
+                            ×
+                        </button>
+                    </header>
+
+                    <section class="details-section">
+                        <div class="section-title">
+                            <span class="section-icon">👤</span>
+                            <span>Personal Information</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Full Name</span>
+                            <span class="details-value" id="detailFullName">-</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Email Address</span>
+                            <span class="details-value" id="detailEmail">-</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Phone Number</span>
+                            <span class="details-value" id="detailPhone">-</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Registration Date</span>
+                            <span class="details-value" id="detailRegDate">-</span>
+                        </div>
+                    </section>
+
+                    <section class="details-section">
+                        <div class="section-title">
+                            <span class="section-icon">🏢</span>
+                            <span>Company Information</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Company Name</span>
+                            <span class="details-value" id="detailCompanyName">-</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Industry</span>
+                            <span class="details-value" id="detailIndustry">-</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Company Size</span>
+                            <span class="details-value" id="detailCompanySize">-</span>
+                        </div>
+                        <div class="details-row">
+                            <span class="details-label">Website</span>
+                            <span class="details-value" id="detailWebsite">-</span>
+                        </div>
+                    </section>
+
+                    <section class="details-section">
+                        <div class="section-title">
+                            <span class="section-icon">📊</span>
+                            <span>Booking Statistics</span>
+                        </div>
+                        <div class="stats-mini">
+                            <div class="stats-mini-item">
+                                <span class="stats-mini-label">Total Bookings</span>
+                                <span class="stats-mini-value" id="detailTotalBookings">0</span>
+                            </div>
+                            <div class="stats-mini-item">
+                                <span class="stats-mini-label">Active</span>
+                                <span class="stats-mini-value" id="detailActiveBookings">0</span>
+                            </div>
+                            <div class="stats-mini-item">
+                                <span class="stats-mini-label">Total Spent</span>
+                                <span class="stats-mini-value" id="detailTotalSpent">$0</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="details-section">
+                        <div class="section-title">
+                            <span class="section-icon">📋</span>
+                            <span>Recent Bookings</span>
+                        </div>
+                        <ul class="detail-list" id="detailRecentBookings">
+
+                        </ul>
+                    </section>
+
+                    <section class="details-section">
+                        <div class="section-title">
+                            <span class="section-icon">📅</span>
+                            <span>Activity Timeline</span>
+                        </div>
+                        <ul class="detail-timeline" id="detailTimeline">
+
+                        </ul>
+                    </section>
+
+                    <section class="details-actions">
+                        
+                        <button type="button" class="danger-btn" id="suspendAccountBtn">
+                            ⏸️ Suspend Account
+                        </button>
+                        <button type="button" class="ghost-btn" id="closeDetailsBtn">
+                            Close
+                        </button>
+                    </section>
+                </aside>
+            </section>
+        </main>
+    </div>
+    <script src="../src/api-service.js"></script>
+    <script src="../src/admin-exhibitor-management.js"></script>
+</body>
+</html>

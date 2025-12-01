@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sign Up - Event Booth Booking System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style/register.css" />
+</head>
+<body>
+    <main class="register-page">
+        <section class="register-intro">
+            <header class="register-header">
+                <h1>Sign Up - Event Booth Booking System</h1>
+                <h2>🎪 Join Our Platform</h2>
+                <p>
+                    Create your exhibitor account and start booking booths for your events today.
+                </p>
+            </header>
+
+            <ul class="register-highlights">
+                <li class="highlight-item">
+                    <div class="highlight-icon">🎯</div>
+                    <div class="highlight-content">
+                        <h3>Easy Booking</h3>
+                        <p>Book booths in just a few clicks with our intuitive interface</p>
+                    </div>
+                </li>
+                <li class="highlight-item">
+                    <div class="highlight-icon">📊</div>
+                    <div class="highlight-content">
+                        <h3>Real-time Updates</h3>
+                        <p>Get instant notifications on booking status and changes</p>
+                    </div>
+                </li>
+                <li class="highlight-item">
+                    <div class="highlight-icon">💼</div>
+                    <div class="highlight-content">
+                        <h3>Manage Multiple Events</h3>
+                        <p>Handle all your event bookings from one dashboard</p>
+                    </div>
+                </li>
+                <li class="highlight-item">
+                    <div class="highlight-icon">🔒</div>
+                    <div class="highlight-content">
+                        <h3>Secure Platform</h3>
+                        <p>Your data is protected with enterprise-grade security</p>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="register-panel">
+            <header class="register-panel-header">
+                <h2>🎯 Create Account</h2>
+                <p>Fill in your details to get started</p>
+            </header>
+
+            <form class="register-form" id="registerForm" novalidate>
+                <fieldset class="form-section">
+                    <legend class="form-section-title">
+                        <span class="section-icon">👤</span>
+                        <span>Personal Information</span>
+                    </legend>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">
+                                First Name <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👤</span>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">
+                                Last Name <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👤</span>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">
+                                Email Address <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">📧</span>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">
+                                Phone Number <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">📱</span>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                    <legend class="form-section-title">
+                        <span class="section-icon">🏢</span>
+                        <span>Company Information</span>
+                    </legend>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="companyName">
+                                Company Name <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🏢</span>
+                                <input
+                                    type="text"
+                                    id="companyName"
+                                    name="companyName"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="industry">
+                                Industry <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">💼</span>
+                                <select id="industry" name="industry" required>
+                                    <option value="">Select Industry</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Retail">Retail</option>
+                                    <option value="Manufacturing">Manufacturing</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Hospitality">Hospitality</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="companySize">
+                                Company Size
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👥</span>
+                                <select id="companySize" name="companySize">
+                                    <option value="">Select Size</option>
+                                    <option value="1-10">1-10 employees</option>
+                                    <option value="11-50">11-50 employees</option>
+                                    <option value="51-200">51-200 employees</option>
+                                    <option value="201-500">201-500 employees</option>
+                                    <option value="501+">501+ employees</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="companyAddress">
+                                Company Address
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">📍</span>
+                                <input
+                                    type="text"
+                                    id="companyAddress"
+                                    name="companyAddress"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                    <legend class="form-section-title">
+                        <span class="section-icon">🔒</span>
+                        <span>Account Security</span>
+                    </legend>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="password">
+                                Password <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">
+                                Confirm Password <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="terms-container">
+                        <label class="terms-label">
+                            <input
+                                type="checkbox"
+                                id="agreeTerms"
+                                name="agreeTerms"
+                                required
+                            />
+                            <span class="terms-text">
+                                I agree to the
+                                <a href="#" class="link">Terms of Service</a>
+                                and
+                                <a href="#" class="link">Privacy Policy</a>.
+                                I understand that my information will be used to manage booth bookings and event communications.
+                            </span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="submit-button">
+                    Create Account
+                </button>
+
+                <p class="login-hint">
+                    Already have an account?
+                    <a href="../webContent/Login.html" class="link">Login here</a>
+                </p>
+            </form>
+        </section>
+    </main>
+    <script src="../src/api-service.js"></script>
+    <script src="../src/register.js"></script>
+</body>
+</html>

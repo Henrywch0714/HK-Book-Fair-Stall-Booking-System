@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Booth Layout - Expo Genius</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../style/booth-layout.css" />
+</head>
+<body>
+  <header class="layout-header">
+    <div class="header-left">
+      <h1>Booth Layout</h1>
+      <div id="eventTitle" class="event-title"></div>
+    </div>
+    <div class="header-right">
+      <span id="userNameDisplay" class="user-name">Loading user...</span>
+      <button id="backToBookingBtn" class="btn-secondary">← Back</button>
+    </div>
+  </header>
+
+  <main class="layout-main">
+    <section class="legend">
+      <span class="legend-item">
+        <span class="legend-box legend-my"></span> My Booth
+      </span>
+      <span class="legend-item">
+        <span class="legend-box legend-available"></span> Available
+      </span>
+      <span class="legend-item">
+        <span class="legend-box legend-booked"></span> Booked by others
+      </span>
+    </section>
+
+    <section class="layout-wrapper">
+      <div id="boothGrid" class="booth-grid">
+        <!-- JS 动态插入 -->
+      </div>
+    </section>
+  </main>
+
+  <script src="../src/api-service.js"></script>
+  <script src="../src/booth-layout.js"></script>
+</body>
+</html>

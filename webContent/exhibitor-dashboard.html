@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exhibitor Dashboard - Event Booth System</title>
+    <link rel="stylesheet" href="../style/exhibitor-dashboard.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <button id="mobileMenuToggle" class="menu-toggle" aria-label="Toggle Menu">☰</button>
+            <div class="logo">
+                <span class="logo-icon">🎪</span>
+                <span class="logo-text">Event Booth System</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="user-info">
+                <span class="user-name" id="userName">Loading...</span>
+                <span class="user-role">Exhibitor</span>
+            </div>
+            <button id="logoutButton" class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <ul class="nav-menu">
+                <li><a href="exhibitor-dashboard.html" class="nav-link active">📊 Dashboard</a></li>
+                <li><a href="booth-booking-svg.html" class="nav-link">🎟 Book Booth</a></li>
+                <li><a href="my-bookings.html" class="nav-link">📋 My Bookings</a></li>
+                <li><a href="booth-layout.html" class="nav-link">🗺️ My Booth Map</a></li>
+                <li><a href="settings.html" class="nav-link">⚙️ Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-content">
+                    <h1 id="welcomeTitle">Welcome back! 👋</h1>
+                    <p id="welcomeSubtitle">Here's what's happening with your booth bookings</p>
+                </div>
+                <div class="welcome-actions">
+                    <button onclick="window.location.href='booth-booking-svg.html'" class="btn-primary">
+                        ➕ Book New Booth
+                    </button>
+                </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card stat-card-primary">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Active Bookings</div>
+                        <div class="stat-value" id="activeBookingsCount">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <div class="stat-change positive" id="bookingsChange" style="display: none;">
+                            <span>↑</span> <span id="bookingsChangeText"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-card-success">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Confirmed Booths</div>
+                        <div class="stat-value" id="confirmedBookingsCount">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <div class="stat-subtitle" id="confirmedSubtitle"></div>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-card-warning">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Pending Payments</div>
+                        <div class="stat-value" id="pendingPaymentsCount">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <div class="stat-subtitle" id="pendingSubtitle"></div>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-card-info">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Investment</div>
+                        <div class="stat-value" id="totalInvestment">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <div class="stat-subtitle" id="investmentSubtitle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2 class="section-title">Quick Actions</h2>
+                    <p class="section-subtitle">Frequently used actions</p>
+                </div>
+                <div class="quick-actions-grid">
+                    <a href="booth-booking-svg.html" class="quick-action-card">
+                        <div class="quick-action-icon">🎟️</div>
+                        <div class="quick-action-content">
+                            <h3>Book New Booth</h3>
+                            <p>Select booths on interactive SVG map</p>
+                        </div>
+                        <div class="quick-action-arrow">→</div>
+                    </a>
+                    
+                    <a href="booth-layout.html" class="quick-action-card">
+                        <div class="quick-action-icon">🗺️</div>
+                        <div class="quick-action-content">
+                            <h3>My Booth Map</h3>
+                            <p>View your booked booth locations</p>
+                        </div>
+                        <div class="quick-action-arrow">→</div>
+                    </a>
+                    
+                    <a href="my-bookings.html" class="quick-action-card">
+                        <div class="quick-action-icon">📋</div>
+                        <div class="quick-action-content">
+                            <h3>My Bookings</h3>
+                            <p>View all booking records</p>
+                        </div>
+                        <div class="quick-action-arrow">→</div>
+                    </a>
+                    
+                    <a href="payment.html" class="quick-action-card">
+                        <div class="quick-action-icon">💳</div>
+                        <div class="quick-action-content">
+                            <h3>Payments</h3>
+                            <p>Manage invoices and payments</p>
+                        </div>
+                        <div class="quick-action-arrow">→</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Bookings</h2>
+                    <a href="my-bookings.html" class="view-all-link">View All →</a>
+                </div>
+                <div class="bookings-table-container">
+                    <div id="loadingBookings" class="loading-container">
+                        <div class="loading-spinner-large"></div>
+                        <p>Loading your bookings...</p>
+                    </div>
+                    <div id="emptyBookings" class="empty-state" style="display: none;">
+                        <div class="empty-icon">📭</div>
+                        <h3>No Bookings Yet</h3>
+                        <p>You haven't made any booth bookings yet</p>
+                        <button onclick="window.location.href='booth-booking.html'" class="btn-primary">
+                            Book Your First Booth
+                        </button>
+                    </div>
+                    <table id="bookingsTable" class="data-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Booth ID</th>
+                                <th>Event</th>
+                                <th>Event Date</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2 class="section-title">Upcoming Events</h2>
+                    <p class="section-subtitle">Events you're participating in</p>
+                </div>
+                <div id="loadingEvents" class="loading-container">
+                    <div class="loading-spinner-large"></div>
+                    <p>Loading events...</p>
+                </div>
+                <div id="emptyEvents" class="empty-state" style="display: none;">
+                    <div class="empty-icon">📅</div>
+                    <h3>No Upcoming Events</h3>
+                    <p>You have no events scheduled</p>
+                </div>
+                <div id="eventsGrid" class="events-grid" style="display: none;">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../src/api-service.js"></script>
+    <script src="../src/exhibitor-dashboard.js"></script>
+</body>
+</html>

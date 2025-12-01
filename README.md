@@ -220,7 +220,7 @@ const EventSchema = new mongoose.Schema({
   imageUrl: String,
   createdAt: { type: Date, default: Date.now }
 });
-
+text
 Purpose
 
 Represents an event or exhibition where booths are sold.
